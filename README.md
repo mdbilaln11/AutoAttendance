@@ -272,6 +272,26 @@ py -m http.server 8080
 - **`pip install` fails:** check your internet/proxy settings and retry in a fresh virtual environment.
 - **PostgreSQL connection fails:** verify `DATABASE_URL` in `backend/.env` and make sure the database container is healthy.
 
+- `docs/` architecture, deployment, API, and database documentation.
+- `docker-compose.yml` local PostgreSQL + API stack.
+
+## Quick Start
+
+```bash
+cp backend/.env.example backend/.env
+docker compose up --build
+```
+
+Run backend tests locally:
+
+```bash
+cd backend
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pytest
+```
+
 ## Security Baseline
 
 - Passwords are hashed with Argon2 via Passlib.
