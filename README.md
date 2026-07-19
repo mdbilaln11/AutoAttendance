@@ -264,6 +264,19 @@ cd web-test-app
 py -m http.server 8080
 ```
 
+
+## Other Testing Options
+
+You do not have to use the Windows web tester. Additional options are documented in `docs/TESTING.md`, including:
+
+- FastAPI Swagger UI at `http://localhost:8000/docs`.
+- PowerShell `Invoke-RestMethod` requests with video upload.
+- `curl` multipart requests.
+- Postman or Insomnia form-data requests.
+- Automated `pytest` backend tests.
+- Docker smoke tests and logs.
+- Flutter web/mobile testing commands.
+
 ## Troubleshooting
 
 - **Docker says the port is already in use:** stop the existing service or change the mapped port in `docker-compose.yml`.
