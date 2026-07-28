@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AutoAttendance Web Tester</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero card">
+        <div>
+          <p class="eyebrow">Windows browser test app</p>
+          <h1>AutoAttendance Video Preview Tester</h1>
+          <p class="muted">Record or upload a short classroom video, send it to the FastAPI attendance preview endpoint, and inspect present, absent, and unknown face candidates.</p>
+        </div>
+        <div class="status" id="apiStatus">API not checked</div>
+      </section>
+
+      <section class="grid">
+        <form class="card form" id="attendanceForm">
+          <h2>Class Context</h2>
+          <label>API Base URL <input id="apiBaseUrl" value="http://localhost:8000" required /></label>
+          <label>Department <input name="department" value="Computer Science" required /></label>
+          <label>Year <input name="year" type="number" min="1" max="5" value="3" required /></label>
+          <label>Section <input name="section" value="A" required /></label>
+          <label>Subject <input name="subject" value="Artificial Intelligence" required /></label>
+          <label>Classroom Video <input name="video" id="videoFile" type="file" accept="video/*" required /></label>
+          <div class="actions">
+            <button type="button" id="checkApi">Check API</button>
+            <button type="submit" class="primary">Send Preview</button>
+          </div>
+        </form>
+
+        <section class="card recorder">
+          <h2>Optional Camera Recorder</h2>
+          <video id="cameraPreview" autoplay muted playsinline></video>
+          <div class="actions">
+            <button id="startCamera" type="button">Start Camera</button>
+            <button id="record" type="button" disabled>Record 10s</button>
+          </div>
+          <p class="muted small">Works in Chrome/Edge on Windows. Use HTTPS or localhost for camera access.</p>
+        </section>
+      </section>
+
+      <section class="card">
+        <div class="resultsHeader">
+          <h2>Attendance Preview</h2>
+          <span id="lastUpdated" class="muted">No request sent</span>
+        </div>
+        <pre id="rawResponse">Submit a video to view API output.</pre>
+        <div class="columns">
+          <div><h3>Present</h3><ul id="presentList"></ul></div>
+          <div><h3>Absent</h3><ul id="absentList"></ul></div>
+          <div><h3>Unknown / Rejected</h3><ul id="unknownList"></ul></div>
+        </div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

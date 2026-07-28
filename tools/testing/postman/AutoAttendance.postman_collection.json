@@ -1,0 +1,71 @@
+{
+  "info": {
+    "name": "AutoAttendance API Tests",
+    "description": "Manual API tests for AutoAttendance without using the web tester.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8000" },
+    { "key": "videoPath", "value": "C:\\path\\to\\classroom-video.mp4" }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('health endpoint returns ok', function () {",
+              "  pm.response.to.have.status(200);",
+              "  pm.expect(pm.response.json()).to.eql({ status: 'ok' });",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance Preview Upload",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "department", "value": "Computer Science", "type": "text" },
+            { "key": "year", "value": "3", "type": "text" },
+            { "key": "section", "value": "A", "type": "text" },
+            { "key": "subject", "value": "Artificial Intelligence", "type": "text" },
+            { "key": "video", "type": "file", "src": "{{videoPath}}" }
+          ]
+        },
+        "url": "{{baseUrl}}/api/v1/attendance/preview"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('preview request succeeds', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "pm.test('preview response has expected groups', function () {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body).to.have.property('present');",
+              "  pm.expect(body).to.have.property('absent_student_ids');",
+              "  pm.expect(body).to.have.property('unknown');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
